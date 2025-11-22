@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة نافس التعليمية 🏆</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .bounce-animation {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-text {
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+        }
+
+        /* New styles for correct answers */
+        .correct-answer {
+            background-color: #10b981 !important;
+            border-color: #059669 !important;
+            color: white !important;
+        }
+
+        .correct-answer-label {
+            background-color: #10b981 !important;
+            border-color: #059669 !important;
+            color: white !important;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .mobile-padding {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .mobile-text-lg {
+                font-size: 1.125rem;
+            }
+            
+            .mobile-text-xl {
+                font-size: 1.25rem;
+            }
+            
+            .mobile-text-2xl {
+                font-size: 1.5rem;
+            }
+            
+            .mobile-text-3xl {
+                font-size: 1.875rem;
+            }
+            
+            .mobile-py-3 {
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+            }
+            
+            .mobile-p-4 {
+                padding: 1rem;
+            }
+            
+            .mobile-p-6 {
+                padding: 1.5rem;
+            }
+            
+            .mobile-space-y-2 > * + * {
+                margin-top: 0.5rem;
+            }
+            
+            .mobile-flex-col {
+                flex-direction: column;
+            }
+            
+            .mobile-text-center {
+                text-align: center;
+            }
+            
+            .mobile-w-full {
+                width: 100%;
+            }
+            
+            .mobile-mb-4 {
+                margin-bottom: 1rem;
+            }
+            
+            .mobile-mt-4 {
+                margin-top: 1rem;
+            }
+        }
+
+        /* Touch-friendly buttons for mobile */
+        @media (max-width: 768px) {
+            .touch-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .touch-text {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        /* Improved scrolling for mobile */
+        .mobile-scroll {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+    <div id="app">
+        <!-- Grade Selection Screen -->
+        <div id="gradeSelectionScreen" class="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center p-4 mobile-padding">
+            <div class="max-w-md w-full">
+                <div class="text-center mb-8">
+                    <div class="bg-gradient-to-br from-emerald-600 to-teal-600 p-4 rounded-2xl shadow-2xl inline-block mb-4">
+                        <i data-lucide="trophy" class="w-12 h-12 md:w-16 md:h-16 text-white"></i>
+                    </div>
+                    <h1 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 mobile-text-center">منصة نافس التعليمية 🏆</h1>
+                    <p class="text-gray-600 mobile-text-center">ٱلتابعة لابتدائية أُبي بن كعب ومتوسطة ٱلملك فيصل بن عبدٱلعزيز بٱلمظيلف</p>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 border-2 border-emerald-100">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center">اختر صفك الدراسي</h2>
+                    
+                    <div class="space-y-4">
+                        <button
+                            id="sixthGradeBtn"
+                            class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-lg font-bold hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg text-lg touch-button touch-text"
+                        >
+                            الصف السادس الابتدائي
+                        </button>
+                        
+                        <button
+                            id="thirdGradeBtn"
+                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-lg font-bold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg text-lg touch-button touch-text"
+                        >
+                            الصف الثالث المتوسط
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 mobile-text-center">
+                    <p class="text-sm text-emerald-800">
+                        🎯 <strong>اختر صفك وابدأ الاختبارات مباشرة!</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div id="mainApp" class="hidden">
+<header class="bg-white shadow-md border-b-4 border-emerald-500">
+                <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-3 md:py-5 mobile-padding">
+                    <div class="flex items-center justify-between mobile-flex-col mobile-space-y-3 md:flex-row md:space-y-0">
+                        <!-- Logo and Title -->
+                        <div class="flex items-center space-x-3 space-x-reverse mobile-text-center md:text-right">
+                            <div class="bg-gradient-to-br from-emerald-600 to-teal-600 p-2 md:p-3 rounded-xl shadow-lg">
+                                <i data-lucide="trophy" class="w-8 h-8 md:w-10 md:h-10 text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl md:text-3xl font-bold text-gray-900">منصة نافس التعليمية 🏆</h1>
+                                <p id="schoolName" class="text-xs md:text-sm text-gray-600 mt-1"></p>
+                                <p class="text-xs md:text-sm text-gray-600 mt-1">ٱلتابعة لابتدائية أُبي بن كعب ومتوسطة ٱلملك فيصل بن عبدٱلعزيز بٱلمظيلف</p>
+                            </div>
+                        </div>
+
+                        <!-- Navigation and User Info -->
+                        <div class="flex items-center space-x-3 space-x-reverse mobile-flex-col mobile-space-y-2 md:flex-row md:space-y-0">
+                            <!-- Navigation Buttons -->
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <button
+                                    id="backToDashboardBtn"
+                                    class="p-2 md:p-3 hover:bg-gray-100 rounded-lg transition-colors touch-button"
+                                    title="الصفحة الرئيسية"
+                                >
+                                    <i data-lucide="home" class="w-5 h-5 md:w-6 md:h-6 text-gray-700"></i>
+                                </button>
+                                <button
+                                    id="changeGradeBtn"
+                                    class="p-2 md:p-3 hover:bg-blue-50 rounded-lg transition-colors group touch-button"
+                                    title="تغيير الصف"
+                                >
+                                    <i data-lucide="refresh-cw" class="w-5 h-5 md:w-6 md:h-6 text-gray-700 group-hover:text-blue-600"></i>
+                                </button>
+                            </div>
+
+                            <!-- User Info -->
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="text-right">
+                                    <p class="text-xs md:text-sm text-gray-600">أهلاً،</p>
+                                    <p id="studentName" class="font-bold text-gray-900 text-sm md:text-base">طالب/ة نافس</p>
+                                </div>
+                                <div id="studentAvatar" class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-base md:text-lg shadow-lg">ن</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Credits Section -->
+                    <div class="mt-3 pt-3 border-t border-gray-200 text-center md:text-right">
+                        <p class="text-xs text-gray-600">إعداد وتنفيذ: أ. عبدالله عثمان الغامدي</p>
+                        <p class="text-xs text-gray-600">مدير المدرسة: د. محمد عبدالله الشاووش</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="dashboardView" class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 md:py-8 mobile-padding">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
+                    <!-- Progress Card -->
+                    <div class="stat-card bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-6 border-2 border-green-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs md:text-sm text-gray-600 mb-1 md:mb-2 font-medium">تقدّمك</p>
+                                <p id="progressPercent" class="text-2xl md:text-4xl font-bold text-green-600">0%</p>
+                            </div>
+                            <div class="bg-green-100 p-2 md:p-4 rounded-lg md:rounded-xl">
+                                <i data-lucide="trending-up" class="w-6 h-6 md:w-9 md:h-9 text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completed Lessons Card -->
+                    <div class="stat-card bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-6 border-2 border-purple-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs md:text-sm text-gray-600 mb-1 md:mb-2 font-medium">المكتملة</p>
+                                <p id="completedLessons" class="text-2xl md:text-4xl font-bold text-purple-600">0/3</p>
+                            </div>
+                            <div class="bg-purple-100 p-2 md:p-4 rounded-lg md:rounded-xl">
+                                <i data-lucide="target" class="w-6 h-6 md:w-9 md:h-9 text-purple-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Level Card -->
+                    <div class="stat-card bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-6 border-2 border-orange-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs md:text-sm text-gray-600 mb-1 md:mb-2 font-medium">المستوى</p>
+                                <p id="studentLevel" class="text-base md:text-xl font-bold text-orange-600">مبتدئ</p>
+                            </div>
+                            <div class="bg-orange-100 p-2 md:p-4 rounded-lg md:rounded-xl">
+                                <i data-lucide="trophy" class="w-6 h-6 md:w-9 md:h-9 text-orange-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Points Card -->
+                    <div class="stat-card bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-6 border-2 border-emerald-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs md:text-sm text-gray-600 mb-1 md:mb-2 font-medium">النقاط</p>
+                                <p id="studentPoints" class="text-2xl md:text-4xl font-bold text-emerald-600">0</p>
+                            </div>
+                            <div class="bg-emerald-100 p-2 md:p-4 rounded-lg md:rounded-xl">
+                                <i data-lucide="star" class="w-6 h-6 md:w-9 md:h-9 text-emerald-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-7 border-2 border-gray-100">
+                            <div class="flex items-center justify-between mb-4 md:mb-6 mobile-flex-col mobile-space-y-2 md:flex-row md:space-y-0">
+                                <h2 class="text-xl md:text-3xl font-bold text-gray-900 mobile-text-center md:text-right">اختباراتك</h2>
+                                <span id="subjectGrade" class="bg-emerald-100 text-emerald-700 px-3 py-1 md:px-5 md:py-2 rounded-full text-xs md:text-sm font-bold mobile-text-center">
+                                    الصف الدراسي
+                                </span>
+                            </div>
+
+                            <div id="lessonsContainer" class="space-y-3 md:space-y-4">
+                                <!-- Lessons will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border-2 border-gray-100 mb-4 md:mb-6">
+                            <h2 class="text-lg md:text-2xl font-bold text-gray-900 mb-3 md:mb-5 flex items-center mobile-justify-center">
+                                <i data-lucide="award" class="w-5 h-5 md:w-6 md:h-6 ml-2 text-yellow-600"></i>
+                                الإنجازات
+                            </h2>
+                            <div id="achievementsContainer" class="space-y-2 md:space-y-3">
+                                <!-- Achievements will be dynamically inserted here -->
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl md:rounded-2xl shadow-lg p-4 md:p-7 text-white">
+                            <h3 class="font-bold text-lg md:text-xl mb-3 md:mb-4">التقدم الإجمالي</h3>
+                            <div class="bg-white bg-opacity-25 rounded-full h-3 md:h-5 mb-3 md:mb-4 overflow-hidden">
+                                <div id="progressBar" class="bg-white h-full rounded-full transition-all duration-700 shadow-inner" style="width: 0%"></div>
+                            </div>
+                            <p class="text-sm md:text-base text-emerald-50 font-medium mobile-text-center">
+                                استمر! أنت تقوم بعمل رائع! 🌟
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz View -->
+            <div id="quizView" class="hidden max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-4 md:py-8 mobile-padding">
+                <div class="bg-white rounded-xl md:rounded-2xl shadow-xl p-4 md:p-8 border-2 border-emerald-100 mobile-scroll">
+                    <div class="flex items-center justify-between mb-4 md:mb-6 pb-3 md:pb-4 border-b-2 border-gray-100 mobile-flex-col mobile-space-y-2 md:flex-row md:space-y-0">
+                        <h2 id="quizTitle" class="text-xl md:text-3xl font-bold text-gray-900 mobile-text-center md:text-right"></h2>
+                        <button
+                            id="backToDashboardFromQuiz"
+                            class="text-gray-600 hover:text-gray-900 font-medium px-3 py-2 md:px-4 md:py-2 rounded-lg hover:bg-gray-100 transition-colors touch-button touch-text mobile-w-full md:w-auto mobile-mt-2 md:mt-0"
+                        >
+                            العودة للوحة التحكم
+                        </button>
+                    </div>
+
+                    <div id="quizQuestionsContainer" class="mobile-scroll">
+                        <!-- Quiz questions will be dynamically inserted here -->
+                    </div>
+
+                    <div id="quizResults" class="hidden text-center py-4 md:py-8 mobile-scroll">
+                        <!-- Quiz results will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the external questions file first -->
+    <script src="all_questions.js"></script>
+
+    <script>
+        // Lessons data for different grades
+        const gradeLessons = {
+            "الصف السادس الابتدائي": [
+                { 
+                    id: 1, 
+                    title: "امتحان رياضيات", 
+                    completed: false, 
+                    points: 100, 
+                    locked: false,
+                    questions: sixthMathQuestions.questions
+                },
+                { 
+                    id: 2, 
+                    title: "امتحان علوم", 
+                    completed: false, 
+                    points: 100, 
+                    locked: false,
+                    questions: sixthScienceQuestions.questions
+                },
+                { 
+                    id: 3, 
+                    title: "امتحان لغتي", 
+                    completed: false, 
+                    points: 100, 
+                    locked: false,
+                    questions: sixthArabicQuestions.questions
+                }
+            ],
+            "الصف الثالث المتوسط": [
+                { 
+                    id: 1, 
+                    title: "امتحان رياضيات", 
+                    completed: false, 
+                    points: 100, 
+                    locked: false,
+                    questions: thirdMathQuestions.questions
+                },
+                { 
+                    id: 2, 
+                    title: "امتحان علوم", 
+                    completed: false, 
+                    points: 100, 
+                    locked: false,
+                    questions: thirdScienceQuestions
+                },
+                { 
+                    id: 3, 
+                    title: "امتحان لغتي", 
+                    completed: false, 
+                    points: 100, 
+                    locked: false,
+                    questions: thirdArabicQuestions.questions
+                }
+            ]
+        };
+
+        // Current application state
+        const state = {
+            currentGrade: null,
+            currentView: 'gradeSelection',
+            currentQuiz: null,
+            quizAnswers: {},
+            quizResults: null,
+            studentData: {
+                name: "طالب/ة نافس",
+                grade: "",
+                school: "",
+                level: "مبتدئ",
+                points: 0,
+                progress: 0,
+                completedLessons: 0,
+                totalLessons: 3
+            },
+            lessons: [],
+            achievements: [
+                { id: 1, title: "الخطوات الأولى", desc: "أكمل أول اختبار", icon: "star", unlocked: false },
+                { id: 2, title: "متعلم سريع", desc: "أكمل جميع الاختبارات", icon: "trending-up", unlocked: false },
+                { id: 3, title: "بطل المواد الدراسية", desc: "احصل على 500 نقطة", icon: "trophy", unlocked: false },
+                { id: 4, title: "درجة كاملة", desc: "احصل على 100% في أي اختبار", icon: "award", unlocked: false },
+            ]
+        };
+
+        // DOM Elements
+        const elements = {
+            gradeSelectionScreen: document.getElementById('gradeSelectionScreen'),
+            mainApp: document.getElementById('mainApp'),
+            dashboardView: document.getElementById('dashboardView'),
+            quizView: document.getElementById('quizView'),
+            
+            // Grade selection elements
+            sixthGradeBtn: document.getElementById('sixthGradeBtn'),
+            thirdGradeBtn: document.getElementById('thirdGradeBtn'),
+            
+            // Dashboard elements
+            schoolName: document.getElementById('schoolName'),
+            studentName: document.getElementById('studentName'),
+            studentAvatar: document.getElementById('studentAvatar'),
+            progressPercent: document.getElementById('progressPercent'),
+            completedLessons: document.getElementById('completedLessons'),
+            studentLevel: document.getElementById('studentLevel'),
+            studentPoints: document.getElementById('studentPoints'),
+            subjectGrade: document.getElementById('subjectGrade'),
+            lessonsContainer: document.getElementById('lessonsContainer'),
+            achievementsContainer: document.getElementById('achievementsContainer'),
+            progressBar: document.getElementById('progressBar'),
+            
+            // Quiz elements
+            quizTitle: document.getElementById('quizTitle'),
+            quizQuestionsContainer: document.getElementById('quizQuestionsContainer'),
+            quizResults: document.getElementById('quizResults'),
+            backToDashboardBtn: document.getElementById('backToDashboardBtn'),
+            backToDashboardFromQuiz: document.getElementById('backToDashboardFromQuiz'),
+            changeGradeBtn: document.getElementById('changeGradeBtn')
+        };
+
+        // Initialize Application
+        function init() {
+            setupEventListeners();
+            lucide.createIcons();
+            
+            // Add touch detection for better mobile experience
+            detectTouchDevice();
+        }
+
+        // Detect touch device for better UX
+        function detectTouchDevice() {
+            if ('ontouchstart' in window || navigator.maxTouchPoints) {
+                document.body.classList.add('touch-device');
+            } else {
+                document.body.classList.add('no-touch-device');
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Grade selection events
+            elements.sixthGradeBtn.addEventListener('click', () => selectGrade('الصف السادس الابتدائي'));
+            elements.thirdGradeBtn.addEventListener('click', () => selectGrade('الصف الثالث المتوسط'));
+            
+            // Navigation events
+            elements.backToDashboardBtn.addEventListener('click', backToDashboard);
+            elements.backToDashboardFromQuiz.addEventListener('click', backToDashboard);
+            elements.changeGradeBtn.addEventListener('click', changeGrade);
+        }
+
+        // Grade selection function
+        function selectGrade(grade) {
+            state.currentGrade = grade;
+            state.studentData.grade = grade;
+            state.lessons = JSON.parse(JSON.stringify(gradeLessons[grade] || []));
+            
+            // Reset student progress for new grade
+            state.studentData.points = 0;
+            state.studentData.progress = 0;
+            state.studentData.completedLessons = 0;
+            state.studentData.level = "مبتدئ";
+            
+            // Reset achievements
+            state.achievements.forEach(achievement => {
+                achievement.unlocked = false;
+            });
+            
+            showMainApp();
+        }
+
+        function changeGrade() {
+            state.currentView = 'gradeSelection';
+            elements.mainApp.classList.add('hidden');
+            elements.gradeSelectionScreen.classList.remove('hidden');
+        }
+
+        // Main app functions
+        function showMainApp() {
+            elements.gradeSelectionScreen.classList.add('hidden');
+            elements.mainApp.classList.remove('hidden');
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Update student info
+            elements.studentName.textContent = state.studentData.name;
+            elements.schoolName.textContent = state.studentData.school;
+            elements.studentAvatar.textContent = state.studentData.name.charAt(0);
+            
+            // Update stats
+            elements.progressPercent.textContent = `${state.studentData.progress}%`;
+            elements.completedLessons.textContent = `${state.studentData.completedLessons}/${state.studentData.totalLessons}`;
+            elements.studentLevel.textContent = state.studentData.level;
+            elements.studentPoints.textContent = state.studentData.points;
+            elements.subjectGrade.textContent = state.studentData.grade;
+            elements.progressBar.style.width = `${state.studentData.progress}%`;
+            
+            // Render lessons
+            renderLessons();
+            
+            // Render achievements
+            renderAchievements();
+        }
+
+        function renderLessons() {
+            elements.lessonsContainer.innerHTML = '';
+            
+            state.lessons.forEach(lesson => {
+                const lessonElement = document.createElement('div');
+                lessonElement.className = `border-2 rounded-lg md:rounded-xl p-4 md:p-6 transition-all ${
+                    lesson.locked
+                        ? 'bg-gray-50 border-gray-300 opacity-60'
+                        : lesson.completed
+                        ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-300 shadow-md'
+                        : 'bg-white border-gray-200 hover:shadow-lg hover:border-emerald-400'
+                }`;
+                
+                lessonElement.innerHTML = `
+                    <div class="flex items-center justify-between mobile-flex-col mobile-space-y-3 md:flex-row md:space-y-0">
+                        <div class="flex items-center space-x-3 space-x-reverse md:space-x-5 flex-1 mobile-w-full mobile-justify-center md:justify-start">
+                            <div class="w-12 h-12 md:w-16 md:h-16 rounded-lg md:rounded-xl flex items-center justify-center shadow-md ${
+                                lesson.locked
+                                    ? 'bg-gray-300'
+                                    : lesson.completed
+                                    ? 'bg-gradient-to-br from-green-500 to-emerald-500'
+                                    : 'bg-gradient-to-br from-emerald-500 to-teal-500'
+                            }">
+                                ${lesson.locked 
+                                    ? '<i data-lucide="lock" class="w-5 h-5 md:w-7 md:h-7 text-gray-600"></i>' 
+                                    : lesson.completed 
+                                    ? '<i data-lucide="check-circle" class="w-5 h-5 md:w-7 md:h-7 text-white"></i>' 
+                                    : '<i data-lucide="book-open" class="w-5 h-5 md:w-7 md:h-7 text-white"></i>'
+                                }
+                            </div>
+                            <div class="flex-1 mobile-text-center md:text-right">
+                                <h3 class="font-bold text-gray-900 mb-1 md:mb-2 text-base md:text-lg">
+                                    ${lesson.title}
+                                </h3>
+                                <div class="flex items-center space-x-3 space-x-reverse md:space-x-5 text-xs md:text-sm mobile-justify-center md:justify-start">
+                                    <span class="text-gray-700 font-medium">
+                                        <span class="font-bold text-yellow-600">${lesson.points}</span> نقطة
+                                    </span>
+                                    ${lesson.completed ? '<span class="text-green-700 font-bold">✓ مكتمل</span>' : ''}
+                                    ${lesson.locked ? '<span class="text-gray-600 font-medium">🔒 مغلق</span>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                        ${!lesson.locked && !lesson.completed ? 
+                            `<button class="start-quiz-btn bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-4 py-2 md:px-8 md:py-3 rounded-lg md:rounded-xl font-bold hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 touch-button touch-text mobile-w-full md:w-auto mobile-mt-2 md:mt-0" data-lesson-id="${lesson.id}">
+                                ابدأ الآن
+                            </button>` : ''
+                        }
+                    </div>
+                `;
+                
+                elements.lessonsContainer.appendChild(lessonElement);
+            });
+            
+            // Add event listeners to start quiz buttons
+            document.querySelectorAll('.start-quiz-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const lessonId = parseInt(e.target.getAttribute('data-lesson-id'));
+                    startQuiz(lessonId);
+                });
+            });
+            
+            // Refresh icons
+            lucide.createIcons();
+        }
+
+        function renderAchievements() {
+            elements.achievementsContainer.innerHTML = '';
+            
+            state.achievements.forEach(achievement => {
+                const achievementElement = document.createElement('div');
+                achievementElement.className = `border-2 rounded-lg md:rounded-xl p-3 md:p-4 transition-all ${
+                    achievement.unlocked
+                        ? 'bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-400 shadow-md'
+                        : 'bg-gray-50 border-gray-200'
+                }`;
+                
+                achievementElement.innerHTML = `
+                    <div class="flex items-start space-x-2 space-x-reverse md:space-x-3">
+                        <div class="p-2 md:p-3 rounded-lg md:rounded-xl ${
+                            achievement.unlocked ? 'bg-yellow-400 shadow-md' : 'bg-gray-300'
+                        }">
+                            <i data-lucide="${achievement.icon}" class="w-4 h-4 md:w-6 md:h-6 ${
+                                achievement.unlocked ? 'text-yellow-900' : 'text-gray-500'
+                            }"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-sm md:text-base">${achievement.title}</h3>
+                            <p class="text-xs md:text-sm text-gray-600 mt-1">${achievement.desc}</p>
+                        </div>
+                    </div>
+                `;
+                
+                elements.achievementsContainer.appendChild(achievementElement);
+            });
+            
+            // Refresh icons
+            lucide.createIcons();
+        }
+
+        // Quiz functions
+        function startQuiz(lessonId) {
+            const lesson = state.lessons.find(l => l.id === lessonId);
+            if (!lesson) return;
+            
+            state.currentQuiz = lesson;
+            state.quizAnswers = {};
+            state.quizResults = null;
+            state.currentView = 'quiz';
+            
+            showQuizView();
+        }
+
+        function showQuizView() {
+            elements.dashboardView.classList.add('hidden');
+            elements.quizView.classList.remove('hidden');
+            
+            // Set quiz title
+            elements.quizTitle.textContent = state.currentQuiz.title;
+            
+            // Render questions
+            renderQuizQuestions();
+            
+            // Show/hide appropriate sections
+            elements.quizQuestionsContainer.classList.remove('hidden');
+            elements.quizResults.classList.add('hidden');
+            
+            // Scroll to top for better mobile experience
+            window.scrollTo(0, 0);
+        }
+
+        function renderQuizQuestions() {
+            elements.quizQuestionsContainer.innerHTML = '';
+            
+            if (state.quizResults) {
+                renderQuizResults();
+                return;
+            }
+            
+            state.currentQuiz.questions.forEach((question, qIndex) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'bg-gray-50 rounded-lg md:rounded-xl p-4 md:p-6 border border-gray-200 mb-4 md:mb-6';
+                
+                questionElement.innerHTML = `
+                    <h3 class="font-bold text-gray-900 mb-3 md:mb-4 text-base md:text-lg">
+                        السؤال ${qIndex + 1}: ${question.question}
+                    </h3>
+                    <div class="space-y-2 md:space-y-3">
+                        ${question.options.map((option, index) => `
+                            <label class="flex items-center p-3 md:p-4 rounded-lg border-2 cursor-pointer transition-all touch-button ${
+                                state.quizAnswers[question.id] === index
+                                    ? 'bg-emerald-100 border-emerald-500 shadow-md'
+                                    : 'bg-white border-gray-200 hover:border-emerald-300 hover:bg-emerald-50'
+                            }">
+                                <input 
+                                    type="radio" 
+                                    name="question-${question.id}" 
+                                    value="${index}" 
+                                    class="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 text-emerald-600 touch-button"
+                                    ${state.quizAnswers[question.id] === index ? 'checked' : ''}
+                                >
+                                <span class="font-medium text-gray-800 text-sm md:text-base touch-text">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                
+                elements.quizQuestionsContainer.appendChild(questionElement);
+            });
+            
+            // Add submit button
+            const submitButton = document.createElement('button');
+            submitButton.id = 'submitQuizBtn';
+            submitButton.className = 'w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 md:py-4 rounded-lg md:rounded-xl font-bold text-base md:text-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 mt-4 md:mt-6 touch-button touch-text';
+            submitButton.textContent = 'إرسال الإجابات';
+            submitButton.addEventListener('click', submitQuiz);
+            
+            elements.quizQuestionsContainer.appendChild(submitButton);
+            
+            // Add event listeners to radio buttons
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const questionId = parseInt(e.target.name.split('-')[1]);
+                    const answerIndex = parseInt(e.target.value);
+                    state.quizAnswers[questionId] = answerIndex;
+                });
+            });
+            
+            // Refresh icons
+            lucide.createIcons();
+        }
+
+        function submitQuiz() {
+            let correctCount = 0;
+            state.currentQuiz.questions.forEach(q => {
+                if (state.quizAnswers[q.id] === q.correct) {
+                    correctCount++;
+                }
+            });
+            
+            const percentage = (correctCount / state.currentQuiz.questions.length) * 100;
+            state.quizResults = {
+                correct: correctCount,
+                total: state.currentQuiz.questions.length,
+                percentage: percentage
+            };
+
+            if (percentage >= 70) {
+                completeLesson(state.currentQuiz.id, percentage);
+            }
+            
+            renderQuizResults();
+        }
+
+        function renderQuizResults() {
+            elements.quizQuestionsContainer.classList.add('hidden');
+            elements.quizResults.classList.remove('hidden');
+            
+            const isPassed = state.quizResults.percentage >= 70;
+            
+            elements.quizResults.innerHTML = `
+                <div class="inline-flex items-center justify-center w-16 h-16 md:w-24 md:h-24 rounded-full mb-4 md:mb-6 ${
+                    isPassed ? 'bg-green-100' : 'bg-red-100'
+                }">
+                    ${isPassed 
+                        ? '<i data-lucide="check-circle" class="w-10 h-10 md:w-16 md:h-16 text-green-600"></i>' 
+                        : '<i data-lucide="brain" class="w-10 h-10 md:w-16 md:h-16 text-red-600"></i>'
+                    }
+                </div>
+                <h3 class="text-xl md:text-3xl font-bold mb-3 md:mb-4 text-gray-900">
+                    ${isPassed ? 'أحسنت! 🎉' : 'حاول مرة أخرى 📚'}
+                </h3>
+                <p class="text-lg md:text-xl text-gray-700 mb-2">
+                    النتيجة: ${state.quizResults.correct} من ${state.quizResults.total}
+                </p>
+                <p class="text-2xl md:text-3xl font-bold text-emerald-600 mb-4 md:mb-6">
+                    ${Math.round(state.quizResults.percentage)}%
+                </p>
+                ${isPassed 
+                    ? `<p class="text-base md:text-lg text-gray-600 mb-4 md:mb-6">
+                        لقد حصلت على <span class="font-bold text-emerald-600">${state.currentQuiz.points}</span> نقطة! 🌟
+                       </p>` 
+                    : `<p class="text-base md:text-lg text-gray-600 mb-4 md:mb-6">
+                        تحتاج إلى 70% على الأقل للنجاح. حاول مرة أخرى!
+                       </p>`
+                }
+                <button id="backToDashboardAfterQuiz" class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 md:px-10 md:py-4 rounded-lg md:rounded-xl font-bold text-base md:text-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 touch-button touch-text">
+                    العودة للوحة التحكم
+                </button>
+            `;
+            
+            // Add event listener to back button
+            document.getElementById('backToDashboardAfterQuiz').addEventListener('click', backToDashboard);
+            
+            // Show correct answers
+            showCorrectAnswers();
+            
+            // Refresh icons
+            lucide.createIcons();
+            
+            // Scroll to top for better mobile experience
+            window.scrollTo(0, 0);
+        }
+
+        // NEW FUNCTION: Show correct answers after quiz submission
+        function showCorrectAnswers() {
+            state.currentQuiz.questions.forEach((question, qIndex) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'bg-gray-50 rounded-lg md:rounded-xl p-4 md:p-6 border border-gray-200 mb-4 md:mb-6';
+                
+                let optionsHTML = '';
+                question.options.forEach((option, index) => {
+                    const isUserAnswer = state.quizAnswers[question.id] === index;
+                    const isCorrectAnswer = index === question.correct;
+                    const isUserCorrect = isUserAnswer && isCorrectAnswer;
+                    
+                    let optionClass = 'flex items-center p-3 md:p-4 rounded-lg border-2 transition-all ';
+                    
+                    if (isCorrectAnswer) {
+                        optionClass += 'correct-answer-label bg-green-100 border-green-500 text-green-800';
+                    } else if (isUserAnswer && !isCorrectAnswer) {
+                        optionClass += 'bg-red-100 border-red-500 text-red-800';
+                    } else {
+                        optionClass += 'bg-white border-gray-200 text-gray-800';
+                    }
+                    
+                    optionsHTML += `
+                        <div class="${optionClass} touch-button">
+                            <span class="font-medium text-sm md:text-base">${option}</span>
+                            ${isCorrectAnswer ? '<span class="mr-auto text-green-600 font-bold text-xs md:text-sm">✓ الإجابة الصحيحة</span>' : ''}
+                            ${isUserAnswer && !isCorrectAnswer ? '<span class="mr-auto text-red-600 font-bold text-xs md:text-sm">✗ إجابتك</span>' : ''}
+                        </div>
+                    `;
+                });
+                
+                questionElement.innerHTML = `
+                    <h3 class="font-bold text-gray-900 mb-3 md:mb-4 text-base md:text-lg">
+                        السؤال ${qIndex + 1}: ${question.question}
+                    </h3>
+                    <div class="space-y-2 md:space-y-3">
+                        ${optionsHTML}
+                    </div>
+                    ${question.explanation ? `
+                        <div class="mt-3 md:mt-4 p-3 md:p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="text-blue-800 font-medium text-sm md:text-base">💡 ${question.explanation}</p>
+                        </div>
+                    ` : ''}
+                `;
+                
+                elements.quizResults.appendChild(questionElement);
+            });
+        }
+
+        function completeLesson(lessonId, score) {
+            const lesson = state.lessons.find(l => l.id === lessonId);
+            if (lesson && !lesson.completed) {
+                // Mark lesson as completed
+                state.lessons = state.lessons.map(l => {
+                    if (l.id === lessonId) {
+                        return { ...l, completed: true };
+                    }
+                    return l;
+                });
+                
+                // Update student data
+                const earnedPoints = score === 100 ? state.currentQuiz.points + 25 : state.currentQuiz.points;
+                state.studentData.points += earnedPoints;
+                state.studentData.completedLessons += 1;
+                state.studentData.progress = Math.round((state.studentData.completedLessons / state.studentData.totalLessons) * 100);
+                
+                // Update student level based on progress
+                if (state.studentData.progress < 25) {
+                    state.studentData.level = "مبتدئ";
+                } else if (state.studentData.progress < 50) {
+                    state.studentData.level = "متوسط";
+                } else if (state.studentData.progress < 75) {
+                    state.studentData.level = "متقدم";
+                } else {
+                    state.studentData.level = "خبير";
+                }
+                
+                // Check achievements
+                checkAchievements();
+                
+                // Add visual feedback
+                createFloatingText("+" + earnedPoints + " نقطة", "emerald");
+                
+                // Update dashboard
+                updateDashboard();
+            }
+        }
+
+        function checkAchievements() {
+            // First steps - complete first lesson
+            if (state.studentData.completedLessons >= 1 && !state.achievements[0].unlocked) {
+                state.achievements[0].unlocked = true;
+                showAchievementUnlocked(0);
+            }
+            
+            // Fast learner - complete all lessons
+            if (state.studentData.completedLessons >= state.studentData.totalLessons && !state.achievements[1].unlocked) {
+                state.achievements[1].unlocked = true;
+                showAchievementUnlocked(1);
+            }
+            
+            // Math champion - get 500 points
+            if (state.studentData.points >= 500 && !state.achievements[2].unlocked) {
+                state.achievements[2].unlocked = true;
+                showAchievementUnlocked(2);
+            }
+        }
+
+        function showAchievementUnlocked(achievementIndex) {
+            const achievement = state.achievements[achievementIndex];
+            
+            // Create a notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-yellow-100 border-2 border-yellow-400 rounded-xl p-4 shadow-lg z-50 max-w-sm';
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <div class="bg-yellow-400 p-2 rounded-lg ml-3">
+                        <i data-lucide="${achievement.icon}" class="w-6 h-6 text-yellow-900"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-yellow-800">إنجاز جديد!</h4>
+                        <p class="text-yellow-700 text-sm">${achievement.title}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Refresh icons
+            lucide.createIcons();
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function createFloatingText(text, color) {
+            const floatingText = document.createElement('div');
+            floatingText.className = `floating-text fixed text-${color}-600 font-bold text-xl z-50`;
+            floatingText.textContent = text;
+            floatingText.style.left = '50%';
+            floatingText.style.top = '50%';
+            floatingText.style.transform = 'translate(-50%, -50%)';
+            
+            document.body.appendChild(floatingText);
+            
+            setTimeout(() => {
+                floatingText.remove();
+            }, 1500);
+        }
+
+        function backToDashboard() {
+            state.currentView = 'dashboard';
+            state.currentQuiz = null;
+            state.quizAnswers = {};
+            state.quizResults = null;
+            
+            elements.quizView.classList.add('hidden');
+            elements.dashboardView.classList.remove('hidden');
+            
+            updateDashboard();
+            
+            // Scroll to top for better mobile experience
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
